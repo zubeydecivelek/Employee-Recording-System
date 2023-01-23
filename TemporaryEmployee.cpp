@@ -1,10 +1,6 @@
-//
-// Created by zubey on 30.11.2021.
-//
-
 #include "TemporaryEmployee.h"
 
-TemporaryEmployee::TemporaryEmployee(int employeeNumber, char *name, char *surname, char *title,
+TemporaryEmployee::TemporaryEmployee(int employeeNumber, std::string name, std::string surname, std::string title,
                                      double salary, const Date &birthDate, const Date &appointmentDate,
                                      int otherInstitutions) : Employee(employeeNumber, 0, name, surname,
                                                                        title, salary, birthDate, appointmentDate,

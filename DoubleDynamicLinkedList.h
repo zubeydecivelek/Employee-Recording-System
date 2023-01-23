@@ -1,21 +1,19 @@
-//
-// Created by zubey on 30.11.2021.
-//
-
-#ifndef ASSIGNMENT2_6_DOUBLEDYNAMICLINKEDLIST_H
-#define ASSIGNMENT2_6_DOUBLEDYNAMICLINKEDLIST_H
-
+#ifndef DOUBLEDYNAMICLINKEDLIST_H
+#define DOUBLEDYNAMICLINKEDLIST_H
 #include "PermanentEmployee.h"
+#include "CircularArrayLinkedList.h"
+#include "TemporaryEmployee.h"
+
 
 class Node{
 public:
     PermanentEmployee *data;
-    Node *nextNode = nullptr, *previousNode= nullptr;
-
+    Node *nextNode = nullptr;
+    Node *previousNode= nullptr;
+    ~Node();
     Node(PermanentEmployee *data, Node *nextNode, Node *previousNode);
 
 };
-
 class DoubleDynamicLinkedList {
 private:
     Node *head;
@@ -23,9 +21,11 @@ private:
 public:
     DoubleDynamicLinkedList();
     void add(PermanentEmployee *permanentEmployee);
-    bool contains(PermanentEmployee *permanentEmployee);
-    void print();
+    void erase(int employeeNumber);
+    bool contains(int employeeNumber);
+    PermanentEmployee* findEmployee(int employeeNumber);
+    void convertToVector(std::vector<Employee*> *employeeVector);
 };
 
 
-#endif //ASSIGNMENT2_6_DOUBLEDYNAMICLINKEDLIST_H
+#endif //DOUBLEDYNAMICLINKEDLIST_H

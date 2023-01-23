@@ -1,9 +1,5 @@
-//
-// Created by zubey on 30.11.2021.
-//
-
-#ifndef ASSIGNMENT2_6_DATE_H
-#define ASSIGNMENT2_6_DATE_H
+#ifndef DATE_H
+#define DATE_H
 
 #include <iostream>
 
@@ -14,18 +10,9 @@ private:
     int year;
 public:
     Date(int day, int month, int year);
-
-    int getDay() const;
-
-    void setDay(int day);
-
+    virtual ~Date();
     int getMonth() const;
-
-    void setMonth(int month);
-
     int getYear() const;
-
-    void setYear(int year);
 
     bool operator<(const Date &rhs) const;
 
@@ -43,4 +30,4 @@ public:
 };
 
 
-#endif //ASSIGNMENT2_6_DATE_H
+#endif //DATE_H

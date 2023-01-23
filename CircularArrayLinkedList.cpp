@@ -1,83 +1,111 @@
-//
-// Created by zubey on 30.11.2021.
-//
-
 #include "CircularArrayLinkedList.h"
 
 CircularArrayLinkedList::CircularArrayLinkedList() {}
-
-int CircularArrayLinkedList::size() {
-    return arraySize;
-}
 
 void CircularArrayLinkedList::add(TemporaryEmployee *employee) {
     if (arraySize == maxSize){ //array doluysa
         return;
     }
-
-    if(contains(employee)) return; //if array has the employee
-
     if (arraySize==0){ //array is empty
-        tempNode *node = new tempNode(employee,-1);
-        circularArray[arraySize] = node;
-        firstElementIndex = arraySize;
-        lastElementIndex = arraySize;
+        tempNode *node = new tempNode(employee,0);
+        circularArray[available[0]] = node;
+        firstElementIndex = lastElementIndex = available[0];
+        available.erase(available.begin());
         arraySize++;
         return;
     }
 
+    //if(contains(employee->getEmployeeNumber())) return; //if array has the employee
+
     //add to the front
     if (employee->getEmployeeNumber() < circularArray[firstElementIndex]->temporaryEmployee->getEmployeeNumber()){
         tempNode *node = new tempNode(employee,firstElementIndex);
-        firstElementIndex = arraySize;
-        circularArray[arraySize] = node;
+        firstElementIndex = available[0];
+        circularArray[lastElementIndex]->nextIndex = available[0];
+        circularArray[available[0]] = node;
+        available.erase(available.begin());
         arraySize++;
         return;
     }
     //finding add index
     int iter = firstElementIndex;
-    while (circularArray[iter]->nextIndex != -1 && employee->getEmployeeNumber() > circularArray[circularArray[iter]->nextIndex]->temporaryEmployee->getEmployeeNumber()){
+    while (circularArray[iter]->nextIndex != firstElementIndex && employee->getEmployeeNumber() > circularArray[circularArray[iter]->nextIndex]->temporaryEmployee->getEmployeeNumber()){
         iter = circularArray[iter]->nextIndex;
     }
-    if (circularArray[iter]->nextIndex == -1){ //add back of the list
-        tempNode *node = new tempNode(employee, -1);
-        circularArray[iter]->nextIndex = arraySize;
-        circularArray[arraySize] = node;
-        lastElementIndex = arraySize;
+    if (circularArray[iter]->nextIndex == firstElementIndex){ //add back of the list
+        tempNode *node = new tempNode(employee, firstElementIndex);
+        circularArray[iter]->nextIndex = available[0];
+        circularArray[available[0]] = node;
+        lastElementIndex = available[0];
+        available.erase(available.begin());
         arraySize++;
     }
     else{ //add between two elements
         tempNode *node = new tempNode(employee, circularArray[iter]->nextIndex);
-        circularArray[arraySize] = node;
-        circularArray[iter]->nextIndex = arraySize;
+        circularArray[available[0]] = node;
+        circularArray[iter]->nextIndex = available[0];
+        available.erase(available.begin());
         arraySize++;
     }
 }
 
-
-void CircularArrayLinkedList::toString() {
-    outputString = "";
-}
-
-std::ostream &operator<<(std::ostream &os, const CircularArrayLinkedList &list) {
-    os<<"["<< list.outputString<<"]";
-    return os;
-}
-
-void CircularArrayLinkedList::printList() {
+bool CircularArrayLinkedList::contains(int employeeNumber) {
+    if (arraySize==0) return false;
     int iter = firstElementIndex;
-    while (circularArray[iter]->nextIndex != -1){
-        std::cout<<circularArray[iter]->temporaryEmployee->getName()<<std::endl;
+    while (circularArray[iter]->nextIndex != firstElementIndex){
+        if (circularArray[iter]->temporaryEmployee->getEmployeeNumber() == employeeNumber) return true;
+
         iter = circularArray[iter]->nextIndex;
     }
-    std::cout<<circularArray[iter]->temporaryEmployee->getName()<<std::endl;
+    if (circularArray[iter]->temporaryEmployee->getEmployeeNumber() == employeeNumber) return true;
+    return false;
 }
 
-bool CircularArrayLinkedList::contains(TemporaryEmployee *employee) {
-    for (int i = 0;i<arraySize;i++){
-        if (*circularArray[i]->temporaryEmployee == *employee) return true;
+void CircularArrayLinkedList::erase(int employeeNumber) {
+    if (circularArray[firstElementIndex]->temporaryEmployee->getEmployeeNumber() == employeeNumber) { //delete first element
+        tempNode *node = circularArray[firstElementIndex];
+        available.push_back(firstElementIndex);
+        firstElementIndex = node->nextIndex;
+        circularArray[lastElementIndex]->nextIndex = firstElementIndex;
+        delete node;
     }
-    return false;
+    else{
+        int iter = firstElementIndex;
+        while (circularArray[circularArray[iter]->nextIndex]->temporaryEmployee->getEmployeeNumber()!=employeeNumber){
+            iter = circularArray[iter]->nextIndex;
+        }
+        if (circularArray[iter]->nextIndex == firstElementIndex){ // delete last element
+            available.push_back(lastElementIndex);
+            delete circularArray[lastElementIndex];
+            circularArray[iter]->nextIndex = firstElementIndex;
+            lastElementIndex = iter;
+        }
+        else{
+            tempNode *node = circularArray[circularArray[iter]->nextIndex];
+            available.push_back(circularArray[iter]->nextIndex);
+            circularArray[iter]->nextIndex = circularArray[circularArray[iter]->nextIndex]->nextIndex;
+        }
+    }
+    arraySize--;
+}
+
+void CircularArrayLinkedList::convertToVector(std::vector<Employee *> *employeeVector) {
+    if (arraySize==0) return;
+    int iter = firstElementIndex;
+    while (circularArray[iter]->nextIndex != firstElementIndex){
+        employeeVector->push_back(circularArray[iter]->temporaryEmployee);
+        iter = circularArray[iter]->nextIndex;
+    }
+    employeeVector->push_back(circularArray[iter]->temporaryEmployee);
+}
+
+TemporaryEmployee *CircularArrayLinkedList::find(int employeeNumber) {
+    int iter = firstElementIndex;
+    while (circularArray[iter]->nextIndex != firstElementIndex){
+        if (circularArray[iter]->temporaryEmployee->getEmployeeNumber() == employeeNumber) return circularArray[iter]->temporaryEmployee;
+        iter = circularArray[iter]->nextIndex;
+    }
+    if (circularArray[iter]->temporaryEmployee->getEmployeeNumber() == employeeNumber) return circularArray[iter]->temporaryEmployee;
 }
 
 

@@ -1,0 +1,17 @@
+# ninja log v5
+0	243	1674212491660540331	CMakeFiles/src.dir/Date.cpp.o	e01e5758d2c4d023
+245	470	1674212491888358966	CMakeFiles/src.dir/TemporaryEmployee.cpp.o	54a1d554f7f71e38
+10	342	1674216355697599163	CMakeFiles/src.dir/main.cpp.o	8ff40ec1fc8d621a
+342	387	1674216355745010172	src	43a34b04e2410887
+0	279	1674212491697408309	CMakeFiles/src.dir/Employee.cpp.o	64fe0bdea41f7e74
+0	325	1674212491744631496	CMakeFiles/src.dir/CircularArrayLinkedList.cpp.o	53f1d020d7f91240
+1	246	1674212491661407119	CMakeFiles/src.dir/PermanentEmployee.cpp.o	b4915178eec4792d
+3	240	1674212523042637990	CMakeFiles/src.dir/DoubleDynamicLinkedList.cpp.o	e09f9969733c20b7
+8	230	1674218170201022375	CMakeFiles/src.dir/PermanentEmployee.cpp.o	84b6d12b436eb23c
+8	240	1674218170210914523	CMakeFiles/src.dir/Date.cpp.o	8e8367279e915c36
+8	244	1674218170214408963	CMakeFiles/src.dir/Employee.cpp.o	23cd9f024084c0bb
+8	263	1674218170233479505	CMakeFiles/src.dir/DoubleDynamicLinkedList.cpp.o	9c06de672f0ba594
+7	290	1674218170260391808	CMakeFiles/src.dir/CircularArrayLinkedList.cpp.o	5a83aa1de528389e
+8	301	1674218170272303886	CMakeFiles/src.dir/main.cpp.o	c0c0d5e8446ce061
+231	434	1674218170405306013	CMakeFiles/src.dir/TemporaryEmployee.cpp.o	4012b68e74bc243c
+434	471	1674218170442919094	src	43a34b04e2410887
